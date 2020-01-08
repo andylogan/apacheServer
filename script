@@ -1,0 +1,122 @@
+#!/bin/sh
+
+# This script will create files and directories for the web server and website, as well as set permissions for everything.
+
+# Author: alogan
+
+echo "---------- First the directories... ----------"
+
+cd /home
+echo "Here are the contents of the current directory: "
+pwd
+ls -l
+INSTALL_DIR='/home/andyl/apache'
+echo $INSTALL_DIR
+
+echo ""
+
+if test -d $INSTALL_DIR
+then
+   echo "Directory INSTALL_DIR exists. Here's the long listing: "
+   chmod -R 750 $INSTALL_DIR
+   ls -l $INSTALL_DIR
+else
+   echo "Directory did not exist yet."
+   mkdir $INSTALL_DIR
+   mkdir $INSTALL_DIR/bin
+   mkdir $INSTALL_DIR/conf
+   mkdir $INSTALL_DIR/lib
+   chmod -R 750 $INSTALL_DIR
+   echo "Now the directory exists!"
+   ls -l $INSTALL_DIR
+fi
+
+echo ""
+
+WWW_DIR='/home/andyl/www'
+echo $WWW_DIR
+
+if test -d $WWW_DIR
+then
+   echo "Directory WWW_DIR exists. Here's the long listing: "
+   chmod -R 750 $WWW_DIR
+   chmod 772 $WWW_DIR/ftp
+   ls -l $WWW_DIR
+else
+   echo "Directory did not exist yet."
+   mkdir $WWW_DIR
+   mkdir $WWW_DIR/html
+   mkdir $WWW_DIR/cgi-bin
+   mkdir $WWW_DIR/ftp
+   chmod -R 750 $WWW_DIR
+   chmod 772 $WWW_DIR/ftp
+   echo "Now the directory exists!"
+   ls -l $WWW_DIR
+fi
+
+echo ""
+
+echo "---------- Now for the files... ----------"
+
+echo ""
+
+if test -f $INSTALL_DIR/bin/httpd.conf
+then
+   echo "File httpd.conf exists."
+   chmod 664 $INSTALL_DIR/bin/httpd.conf
+   ls -l $INSTALL_DIR/bin
+else
+   echo "File httpd.conf does not exist yet."
+   touch $INSTALL_DIR/bin/httpd.conf
+   chmod 664 $INSTALL_DIR/bin/httpd.conf
+   echo "Now the file exists!"
+   ls -l $INSTALL_DIR/bin
+fi
+
+echo ""
+
+if test -f $WWW_DIR/html/index.html
+then
+   echo "File index.html exists."
+   chmod 644 $WWW_DIR/html/index.html
+   ls -l $WWW_DIR/html
+else
+   echo "File index.html does not exist yet."
+   touch $WWW_DIR/html/index.html
+   chmod 644 $WWW_DIR/html/index.html
+   echo "Now the file exists!"
+   ls -l $WWW_DIR/html
+fi
+
+echo ""
+
+if test -f $WWW_DIR/cgi-bin/process.pl
+then
+   echo "File process.pl exists."
+   chmod 711 $WWW_DIR/cgi-bin/process.pl
+   ls -l $WWW_DIR/cgi-bin
+else
+   echo "File process.pl does not exist yet."
+   touch $WWW_DIR/cgi-bin/process.pl
+   chmod 711 $WWW_DIR/cgi-bin/process.pl
+   echo "Now the file exists!"
+   ls -l $WWW_DIR/cgi-bin
+fi
+
+echo ""
+
+echo "---------- Now let's look inside of the file httpd.conf... ----------"
+
+echo ""
+
+echo This This is the main Apache HTTP server configuration file. It contains the configuration directives that give the server its instructions. > $INSTALL_DIR/bin/httpd.conf
+
+echo "Contents of httpd.conf: "
+cat $INSTALL_DIR/bin/httpd.conf
+
+echo ""
+
+echo "Here are the contents of the INSTALL_DIR: "
+ls -l $INSTALL_DIR
+echo "Directory installed at /home/usr/apache"
+echo "End."
